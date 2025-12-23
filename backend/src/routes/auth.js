@@ -25,9 +25,7 @@ router.post('/login', async (req, res) => {
     }
 
     const user = result.rows[0];
-    console.log('User found, comparing password...');
     const isValid = await bcrypt.compare(password, user.password);
-    console.log('Password valid:', isValid);
     
     if (!isValid) {
       return res.status(401).json({ message: 'Invalid credentials' });
@@ -68,8 +66,8 @@ router.post('/register', async (req, res) => {
       return res.status(409).json({ message: 'Username already exists' });
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash password (4 rounds for faster development)
+    const hashedPassword = await bcrypt.hash(password, 4);
 
     // Insert new user
     const result = await pool.query(
@@ -121,8 +119,8 @@ router.put('/change-password', async (req, res) => {
       return res.status(401).json({ message: 'Current password is incorrect' });
     }
 
-    // Hash new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // Hash new password (4 rounds for faster development)
+    const hashedPassword = await bcrypt.hash(newPassword, 4);
 
     // Update password
     await pool.query(

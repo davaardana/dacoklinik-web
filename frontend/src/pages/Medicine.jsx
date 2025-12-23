@@ -73,15 +73,51 @@ export default function Medicine() {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
       <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 600 }}>Medicine Management</h1>
-        <p style={{ margin: '0.5rem 0 0', opacity: 0.7 }}>Kelola data obat dan harga</p>
+        <h1 style={{ margin: 0, fontSize: '1.75rem', fontWeight: 600, color: '#1a56db' }}>
+          💊 Medicine Management
+        </h1>
+        <p style={{ margin: '0.5rem 0 0', opacity: 0.7, fontSize: '0.95rem' }}>
+          Kelola data obat dan harga
+        </p>
       </div>
 
-      <div className="grid two" style={{ gap: '2rem', alignItems: 'start' }}>
-        <div className="panel">
-          <h2 style={{ marginTop: 0 }}>{editingId ? 'Edit Obat' : 'Tambah Obat Baru'}</h2>
+      {/* Search Bar - Full Width */}
+      <div className="panel" style={{ marginBottom: '1.5rem' }}>
+        <input
+          type="text"
+          placeholder="🔍 Cari nama obat, harga, atau stok..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{ 
+            width: '100%', 
+            fontSize: '1rem',
+            padding: '0.75rem 1rem',
+            border: '2px solid #e5e7eb',
+            borderRadius: '8px'
+          }}
+        />
+      </div>
+
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: window.innerWidth > 1024 ? '400px 1fr' : '1fr',
+        gap: '1.5rem',
+        alignItems: 'start'
+      }}>
+        {/* Form Panel - Left/Top */}
+        <div className="panel" style={{ position: window.innerWidth > 1024 ? 'sticky' : 'relative', top: '20px' }}>
+          <h2 style={{ 
+            marginTop: 0, 
+            fontSize: '1.25rem',
+            color: editingId ? '#059669' : '#1a56db',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            {editingId ? '✏️ Edit Obat' : '➕ Tambah Obat Baru'}
+          </h2>
           
           <form onSubmit={handleSubmit} className="form">
             <label>
@@ -154,62 +190,145 @@ export default function Medicine() {
           </form>
         </div>
 
+        {/* Table Panel - Right/Bottom */}
         <div className="panel">
-          <div style={{ marginBottom: '1rem' }}>
-            <input
-              type="text"
-              placeholder="🔍 Cari nama obat, harga, atau stok..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              style={{ width: '100%' }}
-            />
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            marginBottom: '1rem',
+            flexWrap: 'wrap',
+            gap: '0.5rem'
+          }}>
+            <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#374151' }}>
+              📋 Daftar Obat
+            </h3>
+            <span style={{ 
+              fontSize: '0.875rem', 
+              opacity: 0.7,
+              background: '#f3f4f6',
+              padding: '0.25rem 0.75rem',
+              borderRadius: '12px',
+              fontWeight: 500
+            }}>
+              Total: {medicines.length} obat
+            </span>
           </div>
 
           <div style={{ overflowX: 'auto' }}>
-            <table>
+            <table style={{ width: '100%', minWidth: '600px' }}>
               <thead>
-                <tr>
-                  <th>Nama Obat</th>
-                  <th>Harga</th>
-                  <th>Stok</th>
-                  <th>Satuan</th>
-                  <th>Aksi</th>
+                <tr style={{ background: '#f9fafb' }}>
+                  <th style={{ textAlign: 'left', padding: '0.75rem' }}>NAMA OBAT</th>
+                  <th style={{ textAlign: 'right', padding: '0.75rem' }}>HARGA</th>
+                  <th style={{ textAlign: 'center', padding: '0.75rem' }}>STOK</th>
+                  <th style={{ textAlign: 'center', padding: '0.75rem' }}>SATUAN</th>
+                  <th style={{ textAlign: 'center', padding: '0.75rem' }}>AKSI</th>
                 </tr>
               </thead>
               <tbody>
                 {medicines.length === 0 ? (
                   <tr>
-                    <td colSpan={5} style={{ textAlign: 'center', opacity: 0.6 }}>
-                      Belum ada data obat
+                    <td colSpan={5} style={{ 
+                      textAlign: 'center', 
+                      padding: '3rem 1rem',
+                      opacity: 0.5,
+                      fontSize: '0.95rem'
+                    }}>
+                      <div>📦</div>
+                      <div style={{ marginTop: '0.5rem' }}>
+                        {search ? 'Tidak ada obat ditemukan' : 'Belum ada data obat'}
+                      </div>
                     </td>
                   </tr>
                 ) : (
                   medicines.map((med) => (
-                    <tr key={med.id}>
-                      <td>
-                        <strong>{med.name}</strong>
+                    <tr key={med.id} style={{ borderBottom: '1px solid #e5e7eb' }}>
+                      <td style={{ padding: '0.875rem' }}>
+                        <strong style={{ color: '#111827', fontSize: '0.95rem' }}>
+                          {med.name}
+                        </strong>
                         {med.description && (
-                          <div style={{ fontSize: '0.875rem', opacity: 0.7, marginTop: '0.25rem' }}>
+                          <div style={{ 
+                            fontSize: '0.8rem', 
+                            opacity: 0.6, 
+                            marginTop: '0.25rem',
+                            lineHeight: 1.4
+                          }}>
                             {med.description}
                           </div>
                         )}
                       </td>
-                      <td>Rp {Number(med.price).toLocaleString('id-ID')}</td>
-                      <td>{med.stock}</td>
-                      <td>{med.unit}</td>
-                      <td>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <td style={{ 
+                        padding: '0.875rem',
+                        textAlign: 'right',
+                        fontWeight: 600,
+                        color: '#059669'
+                      }}>
+                        Rp {Number(med.price).toLocaleString('id-ID')}
+                      </td>
+                      <td style={{ 
+                        padding: '0.875rem',
+                        textAlign: 'center',
+                        fontWeight: 500
+                      }}>
+                        {med.stock}
+                      </td>
+                      <td style={{ 
+                        padding: '0.875rem',
+                        textAlign: 'center',
+                        fontSize: '0.875rem'
+                      }}>
+                        <span style={{
+                          background: '#e0e7ff',
+                          color: '#3730a3',
+                          padding: '0.25rem 0.5rem',
+                          borderRadius: '4px',
+                          fontSize: '0.8rem',
+                          fontWeight: 500
+                        }}>
+                          {med.unit}
+                        </span>
+                      </td>
+                      <td style={{ padding: '0.875rem' }}>
+                        <div style={{ 
+                          display: 'flex', 
+                          gap: '0.5rem',
+                          justifyContent: 'center'
+                        }}>
                           <button
                             onClick={() => handleEdit(med)}
-                            className="ghost"
-                            style={{ padding: '0.25rem 0.75rem', fontSize: '0.875rem' }}
+                            style={{ 
+                              padding: '0.375rem 0.875rem', 
+                              fontSize: '0.875rem',
+                              background: '#3b82f6',
+                              color: 'white',
+                              border: 'none',
+                              borderRadius: '6px',
+                              cursor: 'pointer',
+                              fontWeight: 500,
+                              transition: 'all 0.2s'
+                            }}
+                            onMouseOver={(e) => e.target.style.background = '#2563eb'}
+                            onMouseOut={(e) => e.target.style.background = '#3b82f6'}
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleDelete(med.id)}
-                            className="danger"
-                            style={{ padding: '0.25rem 0.75rem', fontSize: '0.875rem' }}
+                            style={{ 
+                              padding: '0.375rem 0.875rem', 
+                              fontSize: '0.875rem',
+                              background: '#ef4444',
+                              color: 'white',
+                              border: 'none',
+                              borderRadius: '6px',
+                              cursor: 'pointer',
+                              fontWeight: 500,
+                              transition: 'all 0.2s'
+                            }}
+                            onMouseOver={(e) => e.target.style.background = '#dc2626'}
+                            onMouseOut={(e) => e.target.style.background = '#ef4444'}
                           >
                             Hapus
                           </button>
@@ -221,10 +340,6 @@ export default function Medicine() {
               </tbody>
             </table>
           </div>
-
-          <p style={{ marginTop: '1rem', fontSize: '0.875rem', opacity: 0.7 }}>
-            Total: {medicines.length} obat
-          </p>
         </div>
       </div>
     </div>
