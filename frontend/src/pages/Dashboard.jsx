@@ -63,8 +63,46 @@ const Dashboard = () => {
     <section className="dashboard">
       <header className="dashboard__header">
         <div className="dashboard__brand">
-          <h1>Dashboard Analytics</h1>
-          <p className="subtitle">Selamat datang, {user?.username || 'User'}.</p>
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '1rem', 
+            marginBottom: '1.5rem',
+            padding: '1rem',
+            background: 'linear-gradient(135deg, #667eea15 0%, #764ba215 100%)',
+            borderRadius: '12px',
+            border: '1px solid #e5e7eb'
+          }}>
+            <img 
+              src="/Logo DJM.png" 
+              alt="Daco Logo" 
+              style={{ 
+                height: '60px',
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+              }} 
+            />
+            <div>
+              <h2 style={{ 
+                margin: 0, 
+                fontSize: '1.5rem', 
+                fontWeight: 700, 
+                color: '#1a202c',
+                lineHeight: 1.2
+              }}>
+                Inhouse Clinic Daco Jaya Medika
+              </h2>
+              <p style={{ 
+                margin: '0.25rem 0 0', 
+                fontSize: '0.95rem',
+                color: '#667eea',
+                fontWeight: 600
+              }}>
+                Apotek & Klinik
+              </p>
+            </div>
+          </div>
+          <h1 style={{ marginTop: 0 }}>📊 Dashboard Analytics</h1>
+          <p className="subtitle">Selamat datang, <strong>{user?.username || 'User'}</strong> 👋</p>
         </div>
       </header>
 

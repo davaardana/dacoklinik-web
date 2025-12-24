@@ -45,12 +45,101 @@ const Login = () => {
   }
 
   return (
-    <section className="auth-shell">
-      <div className="auth-panel">
-        <img src="/logo_daco.png" alt="Daco Logo" style={{ height: '80px', marginBottom: '1rem' }} />
-        <p className="badge">Inhouse Clinic</p>
-        <h1>Inhouse Clinic Daco Jaya Medika</h1>
-        <p className="subtitle">Portal internal pencatatan medis</p>
+    <section style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      padding: '2rem'
+    }}>
+      <div style={{
+        background: 'white',
+        borderRadius: '16px',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+        padding: '3rem',
+        maxWidth: '450px',
+        width: '100%'
+      }}>
+        {/* Logo and Brand */}
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <img 
+            src="/Logo DJM.png"
+            alt="Daco Logo" 
+            style={{ height: '100px', marginBottom: '1rem' }} 
+          />
+          <h1 style={{ 
+            margin: '0.5rem 0', 
+            fontSize: '1.5rem', 
+            fontWeight: 700,
+            color: '#1a202c',
+            lineHeight: 1.3
+          }}>
+            Inhouse Clinic<br/>Daco Jaya Medika
+          </h1>
+          <p style={{ 
+            margin: '0.5rem 0 0', 
+            fontSize: '0.95rem',
+            color: '#667eea',
+            fontWeight: 600
+          }}>
+            Apotek & Klinik
+          </p>
+          <p style={{ 
+            margin: '0.5rem 0 0', 
+            fontSize: '0.875rem', 
+            opacity: 0.6 
+          }}>
+            Sistem Pencatatan Medis
+          </p>
+        </div>
+
+        {/* Tab Switcher */}
+        <div style={{
+          display: 'flex',
+          gap: '0.5rem',
+          marginBottom: '1.5rem',
+          background: '#f7fafc',
+          padding: '0.25rem',
+          borderRadius: '8px'
+        }}>
+          <button
+            type="button"
+            onClick={() => isLogin || toggleMode()}
+            style={{
+              flex: 1,
+              padding: '0.625rem',
+              border: 'none',
+              borderRadius: '6px',
+              fontSize: '0.9rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              background: isLogin ? '#667eea' : 'transparent',
+              color: isLogin ? 'white' : '#4a5568'
+            }}
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            onClick={() => !isLogin || toggleMode()}
+            style={{
+              flex: 1,
+              padding: '0.625rem',
+              border: 'none',
+              borderRadius: '6px',
+              fontSize: '0.9rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              background: !isLogin ? '#667eea' : 'transparent',
+              color: !isLogin ? 'white' : '#4a5568'
+            }}
+          >
+            Register
+          </button>
+        </div>
 
         <form className="form" onSubmit={handleSubmit}>
           <label>
@@ -80,25 +169,36 @@ const Login = () => {
 
           {error && <p className="form-error">{error}</p>}
 
-          <button type="submit" className="primary" disabled={loading}>
-            {loading ? (isLogin ? 'Memverifikasi...' : 'Mendaftar...') : (isLogin ? 'Masuk' : 'Daftar')}
-          </button>
-
-          <button type="button" className="ghost" onClick={toggleMode} style={{ marginTop: '0.5rem' }}>
-            {isLogin ? 'Belum punya akun? Daftar disini' : 'Sudah punya akun? Masuk'}
+          <button 
+            type="submit" 
+            disabled={loading}
+            style={{
+              width: '100%',
+              padding: '0.875rem',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '1rem',
+              fontWeight: 600,
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.7 : 1,
+              transition: 'all 0.2s'
+            }}
+          >
+            {loading ? (isLogin ? '⏳ Memverifikasi...' : '⏳ Mendaftar...') : (isLogin ? '🔐 Masuk' : '✨ Daftar')}
           </button>
         </form>
-      </div>
-      <div className="auth-hero">
-        <div>
-          <img src="/logo_daco.png" alt="Daco Logo" style={{ height: '120px', marginBottom: '2rem' }} />
-          <p style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1rem' }}>
-            Sistem Pencatatan Medis Modern
-          </p>
-          <p style={{ opacity: 0.9 }}>
-            Mengelola data rekam medis karyawan dengan aman, cepat, dan terstandar.
-          </p>
-        </div>
+
+        {/* Footer */}
+        <p style={{ 
+          marginTop: '1.5rem', 
+          textAlign: 'center', 
+          fontSize: '0.875rem',
+          color: '#718096'
+        }}>
+          © 2024 Daco Jaya Medika
+        </p>
       </div>
     </section>
   )

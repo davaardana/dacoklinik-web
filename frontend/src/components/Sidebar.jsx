@@ -5,7 +5,7 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
-        <img src="/logo_daco.png" alt="Daco Logo" />
+        <img src="/Logo DJM.png" alt="Daco Logo" />
         <h2>Daco Clinic</h2>
       </div>
       
